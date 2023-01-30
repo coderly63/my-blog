@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CommentCard from './component/commentCard'
 import MyComment from './component/myComment'
 import './index.less'
 import 'animate.css'
+import { getCommentList } from '@/api/modules/comment'
+import { CommentList } from '@/api/interface/comment'
 import TrackVisibility from 'react-on-screen'
 
 const Comments = () => {
+  const [commentList, setCommentList] = useState<CommentList | []>([])
+  useEffect(() => {
+    ;(async function () {
+      const res = await getCommentList()
+      if (res.data) setCommentList(res.data)
+    })()
+  }, [])
   return (
     <div className="comments">
       <div className="title">
