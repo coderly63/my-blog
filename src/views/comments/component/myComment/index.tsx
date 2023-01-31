@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
+import { User } from '@/api/interface/comment'
 import './index.less'
 import 'animate.css'
 
 interface myCommentProps {
   placeholder?: string
+  replyId?: User
+  addComment: Function
 }
 
-const myComment: React.FC<myCommentProps> = ({ placeholder }) => {
+const myComment: React.FC<myCommentProps> = ({ placeholder, addComment, replyId }) => {
   const [myComment, setMyComment] = useState<string>('')
   const [buttonText, setButtonText] = useState<string>('Send')
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    addComment(replyId, myComment)
   }
   return (
     <div className="my-comment animate__animated animate__fadeInUp">

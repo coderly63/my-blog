@@ -63,7 +63,6 @@ class RequestHttp {
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
         const { data, config } = response; // 解构
-        console.log('RequestHttp ~ constructor ~ response', response)
         if (data.code === RequestEnums.OVERDUE) {
           // 登录信息失效，应跳转到登录页面，并清空本地的token
           localStorage.setItem('token', '');
