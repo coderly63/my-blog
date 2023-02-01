@@ -80,7 +80,9 @@ class RequestHttp {
       },
       (error: AxiosError) => {
         const { response } = error;
+        console.log('RequestHttp ~ constructor ~ response', response)
         if (response) {
+          if (response.status === 401) message.error('未登录！')
           const data = response.data as errorData
           const errors = data.errors
           if (!errors) return

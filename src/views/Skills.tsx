@@ -5,9 +5,9 @@ import meter3 from '../assets/img/meter3.svg'
 import Carousel from 'react-multi-carousel'
 import { ResponsiveType } from 'node_modules/react-multi-carousel/lib/types'
 import 'react-multi-carousel/lib/styles.css'
-import arrow1 from '../assets/img/arrow1.svg'
-import arrow2 from '../assets/img/arrow2.svg'
 import colorSharp from '../assets/img/color-sharp.png'
+import 'animate.css'
+import TrackVisibility from 'react-on-screen'
 
 const Skills: React.FC = () => {
   const responsive: ResponsiveType = {
@@ -31,42 +31,52 @@ const Skills: React.FC = () => {
   }
   return (
     <section className="skill" id="skills">
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <div className="skill-bx wow zoomIn">
-              <h2>Skills</h2>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.<br></br> Lorem Ipsum has been the industry's standard
-                dummy text.
-              </p>
-              <Carousel
-                responsive={responsive}
-                infinite={true}
-                className="owl-carousel owl-theme skill-slider"
-              >
-                <div className="item">
-                  <img src={meter1} alt="skills" />
-                  <h5>Web Development</h5>
+      <TrackVisibility partialVisibility>
+        {({ isVisible }) => (
+          <div
+            className={
+              isVisible ? 'animate__animated animate__slideInRight' : ''
+            }
+          >
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <div className="skill-bx wow zoomIn">
+                    <h2>Skills</h2>
+                    <p>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.<br></br> Lorem Ipsum has been the
+                      industry's standard dummy text.
+                    </p>
+                    <Carousel
+                      responsive={responsive}
+                      infinite={true}
+                      className="owl-carousel owl-theme skill-slider"
+                    >
+                      <div className="item">
+                        <img src={meter1} alt="skills" />
+                        <h5>Web Development</h5>
+                      </div>
+                      <div className="item">
+                        <img src={meter2} alt="skills" />
+                        <h5>Brand Identity</h5>
+                      </div>
+                      <div className="item">
+                        <img src={meter3} alt="skills" />
+                        <h5>Logo Design</h5>
+                      </div>
+                      <div className="item">
+                        <img src={meter1} alt="skills" />
+                        <h5>backend Development</h5>
+                      </div>
+                    </Carousel>
+                  </div>
                 </div>
-                <div className="item">
-                  <img src={meter2} alt="skills" />
-                  <h5>Brand Identity</h5>
-                </div>
-                <div className="item">
-                  <img src={meter3} alt="skills" />
-                  <h5>Logo Design</h5>
-                </div>
-                <div className="item">
-                  <img src={meter1} alt="skills" />
-                  <h5>Web Development</h5>
-                </div>
-              </Carousel>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        )}
+      </TrackVisibility>
       <img className="background-image-left" src={colorSharp} alt="Image" />
     </section>
   )

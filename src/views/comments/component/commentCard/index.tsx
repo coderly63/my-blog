@@ -1,5 +1,5 @@
-import React, { useId, useState } from 'react'
-import CommentInfo from '../commentInfo'
+import React, { useState, useMemo, useEffect } from 'react'
+import { timestampToTime } from '@/utils'
 import MyComment from '../myComment'
 import { User } from '@/api/interface/comment'
 import './index.less'
@@ -11,6 +11,7 @@ interface CommentCardProps {
   createdAt: number
   nums: number
   replyId?: User
+  hasReply: boolean
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -20,11 +21,17 @@ const CommentCard: React.FC<CommentCardProps> = ({
   nums,
   replyId,
   addComment,
+  hasReply,
 }) => {
   const [isReply, setIsReply] = useState<boolean>(false)
+  const memoTime = useMemo(() => timestampToTime(createdAt), [createdAt])
   const handleReply = () => {
     setIsReply(!isReply)
   }
+
+  useEffect(() => {
+    setIsReply(false)
+  }, [hasReply])
 
   return (
     <div className="comment-card">
@@ -41,11 +48,20 @@ const CommentCard: React.FC<CommentCardProps> = ({
         )}
       </div>
       <div className="message">{content}</div>
-      <CommentInfo
-        handleReply={handleReply}
-        createdAt={createdAt}
-        nums={nums}
-      ></CommentInfo>
+      <div className="comment-info">
+        <div className="time">{memoTime}</div>
+        <div className="like icon">
+          <i className="iconfont icon-icon" />
+          <span className="number">{nums}</span>
+        </div>
+        <div className="dislike icon">
+          <i className="iconfont icon-cai"></i>
+          {/* <span className="number">0</span> */}
+        </div>
+        <div className="reply" onClick={handleReply}>
+          回复
+        </div>
+      </div>
       {isReply ? (
         <MyComment addComment={addComment} replyId={userId}></MyComment>
       ) : (

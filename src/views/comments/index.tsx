@@ -12,6 +12,7 @@ import TrackVisibility from 'react-on-screen'
 
 const Comments = () => {
   const [commentList, setCommentList] = useState<Array<CommentObject> | []>([])
+  const [hasReply, setHasReply] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user)
   useEffect(() => {
     getComments()
@@ -29,7 +30,11 @@ const Comments = () => {
       content,
     }
     const res = await addComment(params)
-    if (res.code === 200) message.success('发布成功！')
+    if (res.code === 200) {
+      message.success('发布成功！')
+      setHasReply(!hasReply)
+      getComments()
+    }
   }
   return (
     <div className="comments">
@@ -40,9 +45,10 @@ const Comments = () => {
       <MyComment addComment={handleSubmit}></MyComment>
       <TrackVisibility partialVisibility>
         {({ isVisible }) => (
-          <div className={1 ? 'animate__animated animate__fadeInUp' : ''}>
+          <div className={isVisible ? 'animate__animated animate__fadeInUp' : ''}>
             {commentList.map((comment) => (
               <CommentCard
+                hasReply={hasReply}
                 addComment={handleSubmit}
                 userId={comment.userId}
                 nums={comment.nums}
