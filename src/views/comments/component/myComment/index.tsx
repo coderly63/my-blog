@@ -9,17 +9,22 @@ interface myCommentProps {
   addComment: Function
 }
 
-const myComment: React.FC<myCommentProps> = ({ placeholder, addComment, replyId }) => {
+const myComment: React.FC<myCommentProps> = ({
+  placeholder,
+  addComment,
+  replyId,
+}) => {
   const [myComment, setMyComment] = useState<string>('')
   const [buttonText, setButtonText] = useState<string>('Send')
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     addComment(replyId, myComment)
+    setMyComment('')
   }
   return (
     <div className="my-comment animate__animated animate__fadeInUp">
       <form onSubmit={handleSubmit}>
-        <img src="../../../public/icon.png" alt="" />
+        <img src="icon.png" alt="" />
         <input
           type="text"
           value={myComment}

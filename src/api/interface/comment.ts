@@ -23,3 +23,9 @@ export interface AddCommentReq {
   replyId?: string,
   content: string,
 }
+
+export interface LikeCommentReq {
+  userId: string,
+  commentId: string,
+  action: number,
+}

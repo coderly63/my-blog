@@ -19,6 +19,7 @@ const Comments = () => {
   }, [])
   const getComments = async () => {
     const res = await getCommentList()
+    console.log('getComments ~ res.data', res.data)
     if (res.data) setCommentList(res.data)
   }
   // 处理发布或回复评论
@@ -40,14 +41,18 @@ const Comments = () => {
     <div className="comments">
       <div className="title">
         <div className="text">comments</div>
-        <div className="number">{24}</div>
+        <div className="number">{commentList.length}</div>
       </div>
       <MyComment addComment={handleSubmit}></MyComment>
       <TrackVisibility partialVisibility>
         {({ isVisible }) => (
-          <div className={isVisible ? 'animate__animated animate__fadeInUp' : ''}>
+          <div
+            className={isVisible ? 'animate__animated animate__fadeInUp' : ''}
+          >
             {commentList.map((comment) => (
               <CommentCard
+                commentId={comment._id}
+                user={user}
                 hasReply={hasReply}
                 addComment={handleSubmit}
                 userId={comment.userId}
