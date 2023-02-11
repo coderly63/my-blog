@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import contactImg from '../assets/img/contact-img.svg'
 import 'animate.css'
+import { message } from 'antd'
 import TrackVisibility from 'react-on-screen'
 
 interface formInitialDetailsType {
@@ -36,7 +37,11 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     setButtonText('Sending...')
-    // const response =
+    setTimeout(() => {
+      setButtonText('Send')
+      message.success('发送成功！')
+      setFormDetails(formInitialDetails)
+    }, 1300)
   }
   return (
     <section className="contact" id="connect">
@@ -58,7 +63,11 @@ const Contact = () => {
           <Col size={12} md={6}>
             <TrackVisibility>
               {({ isVisible }) => (
-                <div className={isVisible ? 'animate__animated animate__fadeIn' : ''}>
+                <div
+                  className={
+                    isVisible ? 'animate__animated animate__fadeIn' : ''
+                  }
+                >
                   <h2>Get In Touch</h2>
                   <form onSubmit={handleSubmit}>
                     <Row>
