@@ -7,6 +7,7 @@ import Contact from '@/views/Contact'
 import Comments from '@/views/comments'
 import Modal from '@/components/Modal'
 import Login from '@/views/login'
+import Info from '@/views/info'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -16,6 +17,8 @@ function App() {
   const [positionList, setpositionList] = useState<Array<number>>([0, 0, 0])
   // 控制登录弹窗组件是否展示
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  // 控制修改用户信息弹窗组件是否展示
+  const [isChangeModalOpen, setIsChangeModalOpen] = useState<boolean>(false)
   // 获取各个组件在渲染时的offsetTop 用于滚动
   const getBannerPosition = () => {
     const skillDom = myRef.current?.children[2] as HTMLElement | null
@@ -50,6 +53,7 @@ function App() {
         <NavBar
           toPosition={toPosition}
           setIsModalOpen={setIsModalOpen}
+          setIsChangeModalOpen={setIsChangeModalOpen}
         ></NavBar>
         <Banner setIsModalOpen={setIsModalOpen}></Banner>
         <Skills></Skills>
@@ -58,6 +62,9 @@ function App() {
         <Comments></Comments>
         <Modal open={isModalOpen} setIsModalOpen={setIsModalOpen}>
           <Login setIsModalOpen={setIsModalOpen}></Login>
+        </Modal>
+        <Modal open={isChangeModalOpen} setIsModalOpen={setIsChangeModalOpen}>
+          <Info setIsModalOpen={setIsChangeModalOpen}></Info>
         </Modal>
       </div>
     </>

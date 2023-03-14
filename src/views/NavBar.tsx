@@ -1,19 +1,29 @@
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
-import { useAppSelector } from '@/redux/hooks'
 import logo from '../assets/img/logo.svg'
+import { message } from 'antd'
 import navIcon1 from '../assets/img/qq.svg'
 import navIcon2 from '../assets/img/vx.svg'
 import navIcon3 from '../assets/img/dy.svg'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { setUser } from '@/redux/modules/userSlice'
+import Modal from '@/components/Modal'
+import './NavBar.less'
 
 interface NavBarProps {
   toPosition: Function
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsChangeModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-const NavBar: React.FC<NavBarProps> = ({ toPosition, setIsModalOpen }) => {
+const NavBar: React.FC<NavBarProps> = ({
+  toPosition,
+  setIsModalOpen,
+  setIsChangeModalOpen,
+}) => {
   const [activeLink, setActiveLink] = useState<string>('home')
   const [scolled, setScolled] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const onScroll = (): void => {
@@ -30,6 +40,10 @@ const NavBar: React.FC<NavBarProps> = ({ toPosition, setIsModalOpen }) => {
     else if (value === 'contact') toPosition(3)
     else toPosition(4)
     setActiveLink(value)
+  }
+  const logout = () => {
+    dispatch(setUser({}))
+    message.success('退出成功')
   }
   return (
     <Navbar expand="lg" className={scolled ? 'scolled' : ''}>
@@ -94,7 +108,25 @@ const NavBar: React.FC<NavBarProps> = ({ toPosition, setIsModalOpen }) => {
               </a>
             </div>
             {user.nickname ? (
-              <i className="iconfont icon-iconzhucetouxiang profile"></i>
+              <div className="profile-card">
+                <i className="iconfont icon-iconzhucetouxiang profile"></i>
+                <div className="profile-detail">
+                  <div className="title">{user.nickname}</div>
+                  <div className="navbar-text">
+                    <button type="submit" onClick={logout}>
+                      <span>logout</span>
+                    </button>
+                  </div>
+                  <div className="navbar-text">
+                    <button
+                      type="submit"
+                      onClick={() => setIsChangeModalOpen(true)}
+                    >
+                      <span>change info</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             ) : (
               <button className="vvd" onClick={() => setIsModalOpen(true)}>
                 <span>Let’s Connect</span>
