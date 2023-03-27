@@ -17,7 +17,8 @@ interface Result {
 interface ResultData<T = any> extends Result {
   data?: T
 }
-const URL: string = 'http://49.233.45.84:3000/api'
+// const URL: string = 'http://49.233.45.84:3000/api'
+const URL: string = 'http://localhost:3000/api'
 enum RequestEnums {
   TIMEOUT = 20000,
   OVERDUE = 600, // 登录失效

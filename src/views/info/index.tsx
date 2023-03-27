@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { useAppSelector } from '@/redux/hooks'
 import ImgCrop from 'antd-img-crop'
 import { Upload, message } from 'antd'
+import { changeInfo } from '@/api/modules/login'
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 import './index.less'
 
@@ -62,8 +63,15 @@ const Info: React.FC<InfoProps> = ({ setIsModalOpen }) => {
     console.log(fileList)
     setButtonText('Sending...')
     message.success('修改成功！')
+    const formdata = new FormData()
+    formdata.append('avator', fileList[0].originFileObj as Blob)
+    formdata.append('nickname', formInitialDetails.nickname)
+    formdata.append('email', formInitialDetails.email)
+    formdata.append('phone', formInitialDetails.phone)
+    const res = await changeInfo(formdata)
+    console.log('handleSubmit ~ res:', res)
     setButtonText('OK')
-    setIsModalOpen(false)
+    // setIsModalOpen(false)
   }
   return (
     <div className="info">
