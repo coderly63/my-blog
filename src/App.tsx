@@ -18,7 +18,7 @@ function App() {
   // 控制登录弹窗组件是否展示
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   // 控制修改用户信息弹窗组件是否展示
-  const [isChangeModalOpen, setIsChangeModalOpen] = useState<boolean>(true)
+  const [isChangeModalOpen, setIsChangeModalOpen] = useState<boolean>(false)
   // 获取各个组件在渲染时的offsetTop 用于滚动
   const getBannerPosition = () => {
     const skillDom = myRef.current?.children[2] as HTMLElement | null

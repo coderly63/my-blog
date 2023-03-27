@@ -53,7 +53,6 @@ const Info: React.FC<InfoProps> = ({ setIsModalOpen }) => {
   const [formDetails, setFormDetails] =
     useState<formInitialDetailsType>(formInitialDetails)
   const [buttonText, setButtonText] = useState<string>('Login')
-
   const onFormUpdate = (category: string, value: string) => {
     setFormDetails({ ...formDetails, [category]: value })
   }
@@ -65,9 +64,9 @@ const Info: React.FC<InfoProps> = ({ setIsModalOpen }) => {
     message.success('修改成功！')
     const formdata = new FormData()
     formdata.append('avator', fileList[0].originFileObj as Blob)
-    formdata.append('nickname', formInitialDetails.nickname)
-    formdata.append('email', formInitialDetails.email)
-    formdata.append('phone', formInitialDetails.phone)
+    formdata.append('nickname', formDetails.nickname)
+    formdata.append('email', formDetails.email)
+    formdata.append('phone', formDetails.phone)
     const res = await changeInfo(formdata)
     console.log('handleSubmit ~ res:', res)
     setButtonText('OK')

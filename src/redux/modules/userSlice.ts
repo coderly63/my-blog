@@ -3,12 +3,12 @@ import type { RootState } from '@/redux'
 
 // Define a type for the slice state
 interface UserState {
-  '_id'?: string,
+  _id?: string
   nickname?: string
   email?: string
   phone?: string
-  token?: string,
-  image?: string,
+  token?: string
+  avator?: string
 }
 
 // Define the initial state using that type
