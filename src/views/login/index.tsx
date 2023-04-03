@@ -58,8 +58,8 @@ const Login: React.FC<LoginProps> = ({ setIsModalOpen }) => {
     setButtonText('Sending...')
     if (isLogin) {
       const res = await login(formDetails)
-      console.log('handleSubmit ~ res', res)
       if (res.data) {
+        console.log('handleSubmit ~ res.data:', res.data)
         dispatch(setUser(res.data))
         if (res.data.token) localStorage.setItem('token', res.data.token)
         message.success('登录成功')

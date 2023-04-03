@@ -63,27 +63,28 @@ const CommentCard: React.FC<CommentCardProps> = ({
   }
 
   return (
-    <div className="comment-card">
-      <i className="iconfont icon-iconzhucetouxiang avator"></i>
-      <div className="reply-title">
-        <span className="nickname">{userId.nickname}</span>
+    <div className='comment-card'>
+      {/* <i className="iconfont icon-iconzhucetouxiang avator"></i> */}
+      <img src={userId.avator} className='avator' alt='' />
+      <div className='reply-title'>
+        <span className='nickname'>{userId.nickname}</span>
         {replyId ? (
-          <span className="reply">
+          <span className='reply'>
             <span>回复</span>
-            <span className="reply-name">{replyId.nickname} ：</span>
+            <span className='reply-name'>{replyId.nickname} ：</span>
           </span>
         ) : (
           <></>
         )}
       </div>
-      <div className="message">{content}</div>
-      <div className="comment-info">
-        <div className="time">{memoTime}</div>
+      <div className='message'>{content}</div>
+      <div className='comment-info'>
+        <div className='time'>{memoTime}</div>
         <div className={likeClass} onClick={handleLike}>
-          <i className="iconfont icon-icon" />
-          <span className="number">{fakeNums}</span>
+          <i className='iconfont icon-icon' />
+          <span className='number'>{fakeNums}</span>
         </div>
-        <div className="reply" onClick={handleReply}>
+        <div className='reply' onClick={handleReply}>
           回复
         </div>
       </div>

@@ -4,7 +4,7 @@ export interface User {
   email?: string
   phone?: string
   token?: string,
-  image?: string,
+  avator?: string,
 }
 
 export interface CommentObject {

@@ -109,7 +109,8 @@ const NavBar: React.FC<NavBarProps> = ({
             </div>
             {user.nickname ? (
               <div className="profile-card">
-                <i className="iconfont icon-iconzhucetouxiang profile"></i>
+                {/* <i className="iconfont icon-iconzhucetouxiang profile"></i> */}
+                <img src={user.avator} className="avator" alt="" />
                 <div className="profile-detail">
                   <div className="title">{user.nickname}</div>
                   <div className="navbar-text">
