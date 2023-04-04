@@ -10,13 +10,17 @@ import { message } from 'antd'
 import { useAppSelector } from '@/redux/hooks'
 import TrackVisibility from 'react-on-screen'
 
-const Comments = () => {
+interface CommentPros {
+  isInfoChange: boolean
+}
+
+const Comments: React.FC<CommentPros> = ({ isInfoChange }) => {
   const [commentList, setCommentList] = useState<Array<CommentObject> | []>([])
   const [hasReply, setHasReply] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user)
   useEffect(() => {
     getComments()
-  }, [])
+  }, [isInfoChange])
   const getComments = async () => {
     const res = await getCommentList()
     console.log('getComments ~ res.data', res.data)
@@ -38,10 +42,10 @@ const Comments = () => {
     }
   }
   return (
-    <div className="comments">
-      <div className="title">
-        <div className="text">comments</div>
-        <div className="number">{commentList.length}</div>
+    <div className='comments'>
+      <div className='title'>
+        <div className='text'>comments</div>
+        <div className='number'>{commentList.length}</div>
       </div>
       <MyComment addComment={handleSubmit}></MyComment>
       <TrackVisibility partialVisibility>

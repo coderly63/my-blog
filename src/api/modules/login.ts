@@ -13,5 +13,7 @@ export const register = (params: RegisterReqForm) => {
 
 export const changeInfo = (params: any) => {
   // 返回的数据格式可以和服务端约定
-  return axios.post<User>('/user/change', params)
+  return axios.post<{
+    user: User
+  }>('/user/change', params)
 }

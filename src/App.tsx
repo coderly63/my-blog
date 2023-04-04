@@ -19,6 +19,8 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   // 控制修改用户信息弹窗组件是否展示
   const [isChangeModalOpen, setIsChangeModalOpen] = useState<boolean>(false)
+  // 用户信息是否更改
+  const [isInfoChange, setIsInfoChange] = useState(false)
   // 获取各个组件在渲染时的offsetTop 用于滚动
   const getBannerPosition = () => {
     const skillDom = myRef.current?.children[2] as HTMLElement | null
@@ -47,6 +49,7 @@ function App() {
       getBannerPosition()
     }, 100)
   }, [])
+  
   return (
     <>
       <div className="App" ref={myRef}>
@@ -59,12 +62,12 @@ function App() {
         <Skills></Skills>
         <Projects></Projects>
         <Contact></Contact>
-        <Comments></Comments>
+        <Comments isInfoChange={isInfoChange}></Comments>
         <Modal open={isModalOpen} setIsModalOpen={setIsModalOpen}>
           <Login setIsModalOpen={setIsModalOpen}></Login>
         </Modal>
         <Modal open={isChangeModalOpen} setIsModalOpen={setIsChangeModalOpen}>
-          <Info setIsModalOpen={setIsChangeModalOpen}></Info>
+          <Info setIsModalOpen={setIsChangeModalOpen} isInfoChange={isInfoChange} setIsInfoChange={setIsInfoChange}></Info>
         </Modal>
       </div>
     </>
