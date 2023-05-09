@@ -16,15 +16,22 @@ interface CommentPros {
 
 const Comments: React.FC<CommentPros> = ({ isInfoChange }) => {
   const [commentList, setCommentList] = useState<Array<CommentObject> | []>([])
+  const [topElement, settopElement] = useState(null as any)
   const [hasReply, setHasReply] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user)
   useEffect(() => {
     getComments()
   }, [isInfoChange])
-  const getComments = async () => {
+  const getComments = async (isNew: boolean = false) => {
     const res = await getCommentList()
-    console.log('getComments ~ res.data', res.data)
-    if (res.data) setCommentList(res.data)
+    if (res.data) {
+      let list = res.data
+      settopElement(list[0])
+      list = list.slice(1)
+      console.log('getComments ~ list:', list)
+      if (!isNew) list.sort((pre, now) => now.nums - pre.nums)
+      setCommentList(list)
+    }
   }
   // 处理发布或回复评论
   const handleSubmit = async (replyId: User, content: string) => {
@@ -45,7 +52,26 @@ const Comments: React.FC<CommentPros> = ({ isInfoChange }) => {
     <div className='comments'>
       <div className='title'>
         <div className='text'>comments</div>
-        <div className='number'>{commentList.length}</div>
+        <div className='number'>{commentList.length + 1}</div>
+        <div className='sort'>
+          <div
+            className='list'
+            onClick={() => {
+              getComments(true)
+            }}
+          >
+            最新
+          </div>
+          <div>|</div>
+          <div
+            className='list'
+            onClick={() => {
+              getComments(false)
+            }}
+          >
+            最热
+          </div>
+        </div>
       </div>
       <MyComment addComment={handleSubmit}></MyComment>
       <TrackVisibility partialVisibility>
@@ -53,6 +79,21 @@ const Comments: React.FC<CommentPros> = ({ isInfoChange }) => {
           <div
             className={isVisible ? 'animate__animated animate__fadeInUp' : ''}
           >
+            {topElement && (
+              <CommentCard
+                isTop={true}
+                commentId={topElement._id}
+                user={user}
+                hasReply={hasReply}
+                addComment={handleSubmit}
+                userId={topElement.userId}
+                nums={topElement.nums}
+                content={topElement.content}
+                createdAt={topElement.createdAt}
+                replyId={topElement.replyId}
+                key={topElement._id}
+              />
+            )}
             {commentList.map((comment) => (
               <CommentCard
                 commentId={comment._id}

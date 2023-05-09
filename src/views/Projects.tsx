@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap'
 import ProjectCard from './ProjectCard'
 import projImg1 from '../assets/img/project-img1.png'
@@ -8,8 +8,11 @@ import projImg4 from '../assets/img/project-img4.png'
 import projImg5 from '../assets/img/project-img5.png'
 import projImg6 from '../assets/img/project-img6.png'
 import colorSharp2 from '../assets/img/color-sharp2.png'
+import { message, Badge, Descriptions } from 'antd'
 import 'animate.css'
+import './Projects.less'
 import TrackVisibility from 'react-on-screen'
+import { getStorage } from '@/utils'
 
 const Projects = () => {
   type ProjectsType = {
@@ -50,16 +53,31 @@ const Projects = () => {
       url: 'https://cn.vuejs.org/',
     },
     {
-      title: 'Node.js® is an open-source, cross-platform JavaScript runtime environment.',
+      title:
+        'Node.js® is an open-source, cross-platform JavaScript runtime environment.',
       description: 'node & js',
       imgUrl: projImg6,
       url: 'https://nodejs.org/en/',
     },
   ]
 
+  const [keyword, setKeyword] = useState('')
+  const downloadZip = (
+    linkUrl: string,
+    isCheck: boolean = false,
+    key: string = 'fronts'
+  ) => {
+    if (isCheck && keyword !== '123456') return message.error('提取码错误！')
+    const link = document.createElement('a')
+    link.href = linkUrl
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    getStorage(key, 19)
+  }
 
   return (
-    <section className="project" id="project">
+    <section className='project' id='project'>
       <Container>
         <Row>
           <Col size={12}>
@@ -78,104 +96,114 @@ const Projects = () => {
                     printer took a galley of type and scrambled it to make a
                     type specimen book.
                   </p>
-                  <Tab.Container id="projects-tabs" defaultActiveKey="first">
+                  <Tab.Container id='projects-tabs' defaultActiveKey='first'>
                     <Nav
-                      variant="pills"
-                      className="nav-pills mb-5 justify-content-center align-items-center"
-                      id="pills-tab"
+                      variant='pills'
+                      className='nav-pills mb-5 justify-content-center align-items-center'
+                      id='pills-tab'
                     >
                       <Nav.Item>
-                        <Nav.Link eventKey="first">Tab 1</Nav.Link>
+                        <Nav.Link eventKey='first'>分享</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                        <Nav.Link eventKey='second'>下载</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="third">Tab 3</Nav.Link>
+                        <Nav.Link eventKey='third'>统计</Nav.Link>
                       </Nav.Item>
                     </Nav>
                     <Tab.Content
-                      id="slideInUp"
+                      id='slideInUp'
                       className={
                         isVisible ? 'animate__animated animate__slideInUp' : ''
                       }
                     >
-                      <Tab.Pane eventKey="first">
+                      <Tab.Pane eventKey='first'>
                         <Row>
                           {projects.map((project, index) => {
                             return <ProjectCard key={index} {...project} />
                           })}
                         </Row>
                       </Tab.Pane>
-                      <Tab.Pane eventKey="second">
-                        <p>
-                          Over 40 contractors for YouTube Music are going on
-                          strike — a first at Google, according to the Alphabet
-                          Workers Union (or AWU). The action is in response to
-                          an order to return to in-person work next week,
-                          something that many of the workers say they can’t do.
-                          They’re demanding a return-to-work policy that’s
-                          “fair, flexible, and does not threaten the safety and
-                          livelihoods of workers,” according to an AWU press
-                          release. The workers are part of the YouTube Music
-                          Content Operations team via Cognizant, a subcontractor
-                          for Alphabet, Google and YouTube’s parent company.
-                          Their jobs are to “ensure music content is available
-                          and approved” for the platform, according to a prior
-                          press release from the AWU.The contractors are
-                          currently attempting to unionize with the AWU, which
-                          filed a petition with the National Labor Relations
-                          Board to represent the contractors in October. Last
-                          week, the AWU filed an unfair labor practice charge
-                          against Alphabet and Cognizant, claiming that the
-                          return to office was being used to “interfere with the
-                          fair voting conditions mandated by federal law,” as
-                          Sam Regan, one of the workers put it in a press
-                          release.TCL’s R646 6-Series TV features 4K HDR and
-                          Mini LED backlighting along with support for HDR10
-                          Plus and 4K gaming at 120Hz. It runs on the Google TV
-                          software, unlike the previous-gen model.It’s hard to
-                          shop for a TV unless, of course, you already know what
-                          you want out of it. Here, we’ve made the selection
-                          process easy, sorting out the best TVs with the lowest
-                          prices.we’ve made the selection process easy, sorting
-                          out the best TVs with the lowest prices.
-                        </p>
+                      <Tab.Pane eventKey='second'>
+                        <div className='second'>
+                          <div className='code'>下载博客前端代码</div>
+                          <div
+                            className='download'
+                            onClick={() =>
+                              downloadZip(
+                                'http://49.233.45.84:3333/blog-end-master.zip'
+                              )
+                            }
+                          >
+                            download
+                          </div>
+                          <div className='code'>下载博客后端代码</div>
+                          <form>
+                            <input
+                              type='password'
+                              value={keyword}
+                              placeholder='请输入提取码'
+                              onChange={(e) => setKeyword(e.target.value)}
+                            />
+                          </form>
+                          <div
+                            className='download'
+                            onClick={() =>
+                              downloadZip(
+                                'http://49.233.45.84:3333/my-blog-main.zip',
+                                true,
+                                'ends'
+                              )
+                            }
+                          >
+                            download
+                          </div>
+                        </div>
                       </Tab.Pane>
-                      <Tab.Pane eventKey="third">
-                        <p>
-                          The future looks bright for those who are looking to
-                          nab a great TV in 2023 at a substantial discount.
-                          Although a fresh slate of new models was announced at
-                          CES 2023, it might be a while until many of them
-                          arrive — and even longer before they receive a
-                          discount. However, you don’t have to wait until later
-                          this year to land a great deal on a mid- or high-end
-                          TV from Sony, LG, TCL, or Samsung, as many models of
-                          the flagship models from last year are currently
-                          selling for hundreds of dollars less than their
-                          original list price.Right now, there are a number of
-                          discounted 4K TVs to choose from, spanning a wide
-                          variety of prices, size configurations, and feature
-                          sets. Whether you want a secondary TV for the bedroom
-                          or a high-end OLED that’s built for a cinema-like
-                          experience, we’ve picked out the best TV deals across
-                          three common categories.Sony’s 55-inch X80J TV, like
-                          the others above, has Google TV software built-in, so
-                          you won’t need to purchase any additional streaming
-                          boxes, like an Apple TV or a Chromecast. The LED panel
-                          also supports HDR10, HLG, and Dolby Vision HDR and has
-                          four HDMI ports (one of which is HDMI ARC). It’s a
-                          relatively low-frills affair, but it seems like a good
-                          deal that’s currently available at Walmart, where you
-                          can buy the 55-inch model for $598 instead of $799.99.
-                          The 65-inch X75K with the Google TV interface is also
-                          on sale at Best Buy for $579.99 ($120 off) and offers
-                          very few differences, as far as I can tell. It
-                          features three HDMI ports instead of four, but if you
-                          want a bigger TV for your money, it could be a good
-                          choice.
-                        </p>
+                      <Tab.Pane eventKey='third'>
+                        <div className='third'>
+                          <Descriptions title='博客相关参数' bordered>
+                            <Descriptions.Item label='名称'>
+                              个人博客
+                            </Descriptions.Item>
+                            <Descriptions.Item label='上线时间'>
+                              2023-01-01 18:00:00
+                            </Descriptions.Item>
+                            <Descriptions.Item label='分类'>
+                              前后端分离
+                            </Descriptions.Item>
+                            <Descriptions.Item label='浏览量'>
+                              {window.localStorage.getItem('views') || 186}
+                            </Descriptions.Item>
+                            <Descriptions.Item label='状态' span={3}>
+                              <Badge status='processing' text='Running' />
+                            </Descriptions.Item>
+                            <Descriptions.Item label='登录次数'>
+                              {window.localStorage.getItem('logins') || 75}
+                            </Descriptions.Item>
+                            <Descriptions.Item label='前端下载量'>
+                              {window.localStorage.getItem('fronts') || 19}
+                            </Descriptions.Item>
+                            <Descriptions.Item label='后端下载量'>
+                              {window.localStorage.getItem('ends') || 13}
+                            </Descriptions.Item>
+                            <Descriptions.Item label='Data Info'>
+                              Data disk type: MongoDB
+                              <br />
+                              Database version: 3.4
+                              <br />
+                              Package: dds.mongo.mid
+                              <br />
+                              Storage space: 10 GB
+                              <br />
+                              Replication factor: 3
+                              <br />
+                              Region: East China 1
+                              <br />
+                            </Descriptions.Item>
+                          </Descriptions>
+                        </div>
                       </Tab.Pane>
                     </Tab.Content>
                   </Tab.Container>
@@ -185,7 +213,7 @@ const Projects = () => {
           </Col>
         </Row>
       </Container>
-      <img className="background-image-right" src={colorSharp2}></img>
+      <img className='background-image-right' src={colorSharp2}></img>
     </section>
   )
 }

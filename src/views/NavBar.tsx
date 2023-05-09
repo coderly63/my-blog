@@ -5,9 +5,11 @@ import { message } from 'antd'
 import navIcon1 from '../assets/img/qq.svg'
 import navIcon2 from '../assets/img/vx.svg'
 import navIcon3 from '../assets/img/dy.svg'
+import announce from '../assets/img/公告.png'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setUser } from '@/redux/modules/userSlice'
 import Modal from '@/components/Modal'
+import Announce from './announce'
 import './NavBar.less'
 
 interface NavBarProps {
@@ -21,6 +23,7 @@ const NavBar: React.FC<NavBarProps> = ({
   setIsChangeModalOpen,
 }) => {
   const [activeLink, setActiveLink] = useState<string>('home')
+  const [isAnnounceOpen, setIsAnnounceOpen] = useState<boolean>(false)
   const [scolled, setScolled] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
@@ -46,14 +49,14 @@ const NavBar: React.FC<NavBarProps> = ({
     message.success('退出成功')
   }
   return (
-    <Navbar expand="lg" className={scolled ? 'scolled' : ''}>
+    <Navbar expand='lg' className={scolled ? 'scolled' : ''}>
       <Container>
-        <Navbar.Brand href="#home">
-          <img src={logo} alt="" />
+        <Navbar.Brand href='#home'>
+          <img src={logo} alt='' />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <Nav className='me-auto'>
             <Nav.Link
               className={
                 activeLink === 'home' ? 'active navbar-link' : 'navbar-link'
@@ -95,32 +98,32 @@ const NavBar: React.FC<NavBarProps> = ({
               Comments
             </Nav.Link>
           </Nav>
-          <span className="navbar-text">
-            <div className="social-icon">
-              <a href="#" className="qq-qrcode">
-                <img src={navIcon1} alt="" />
+          <span className='navbar-text'>
+            <div className='social-icon'>
+              <a href='#' className='qq-qrcode'>
+                <img src={navIcon1} alt='' />
               </a>
-              <a href="#" className="vx-qrcode">
-                <img src={navIcon2} alt="" />
+              <a href='#' className='vx-qrcode'>
+                <img src={navIcon2} alt='' />
               </a>
-              <a href="#" className="dy-qrcode">
-                <img src={navIcon3} alt="" />
+              <a href='#' className='dy-qrcode'>
+                <img src={navIcon3} alt='' />
               </a>
             </div>
             {user.nickname ? (
-              <div className="profile-card">
+              <div className='profile-card'>
                 {/* <i className="iconfont icon-iconzhucetouxiang profile"></i> */}
-                <img src={user.avator} className="avator" alt="" />
-                <div className="profile-detail">
-                  <div className="title">{user.nickname}</div>
-                  <div className="navbar-text">
-                    <button type="submit" onClick={logout}>
+                <img src={user.avator} className='avator' alt='' />
+                <div className='profile-detail'>
+                  <div className='title'>{user.nickname}</div>
+                  <div className='navbar-text'>
+                    <button type='submit' onClick={logout}>
                       <span>logout</span>
                     </button>
                   </div>
-                  <div className="navbar-text">
+                  <div className='navbar-text'>
                     <button
-                      type="submit"
+                      type='submit'
                       onClick={() => setIsChangeModalOpen(true)}
                     >
                       <span>change info</span>
@@ -129,10 +132,18 @@ const NavBar: React.FC<NavBarProps> = ({
                 </div>
               </div>
             ) : (
-              <button className="vvd" onClick={() => setIsModalOpen(true)}>
+              <button className='vvd' onClick={() => setIsModalOpen(true)}>
                 <span>Let’s Connect</span>
               </button>
             )}
+            <img
+              className='announce'
+              src={announce}
+              onClick={() => setIsAnnounceOpen(true)}
+            />
+            <Modal open={isAnnounceOpen} setIsModalOpen={setIsAnnounceOpen}>
+              <Announce setIsModalOpen={setIsAnnounceOpen}></Announce>
+            </Modal>
           </span>
         </Navbar.Collapse>
       </Container>

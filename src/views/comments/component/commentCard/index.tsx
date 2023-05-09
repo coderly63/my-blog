@@ -17,6 +17,7 @@ interface CommentCardProps {
   replyId?: User
   hasReply: boolean
   user: User
+  isTop?: boolean
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -29,6 +30,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
   addComment,
   hasReply,
   user,
+  isTop = false,
 }) => {
   const [isReply, setIsReply] = useState<boolean>(false)
   const [isLike, setIsLike] = useState<boolean>(false)
@@ -42,6 +44,10 @@ const CommentCard: React.FC<CommentCardProps> = ({
     like: true,
     icon: true,
     'is-like': isLike,
+  })
+  const cardClass = classNames({
+    'top-ele': isTop,
+    'comment-card': true,
   })
 
   useEffect(() => {
@@ -63,7 +69,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
   }
 
   return (
-    <div className='comment-card'>
+    <div className={cardClass}>
       {/* <i className="iconfont icon-iconzhucetouxiang avator"></i> */}
       <img src={userId.avator} className='avator' alt='' />
       <div className='reply-title'>
@@ -93,6 +99,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
       ) : (
         <></>
       )}
+      {isTop && <span className='isTop'>置顶</span>}
     </div>
   )
 }

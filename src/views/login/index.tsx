@@ -8,6 +8,7 @@ import { message } from 'antd'
 import { useAppDispatch } from '@/redux/hooks'
 import { setUser } from '@/redux/modules/userSlice'
 import './index.less'
+import { getStorage } from '@/utils'
 
 interface formInitialDetailsType {
   nickname: string
@@ -62,6 +63,7 @@ const Login: React.FC<LoginProps> = ({ setIsModalOpen }) => {
         console.log('handleSubmit ~ res.data:', res.data)
         dispatch(setUser(res.data))
         if (res.data.token) localStorage.setItem('token', res.data.token)
+        getStorage('logins', 75)
         message.success('登录成功')
       }
     } else {
