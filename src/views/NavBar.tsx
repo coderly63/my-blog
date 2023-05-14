@@ -6,6 +6,8 @@ import navIcon1 from '../assets/img/qq.svg'
 import navIcon2 from '../assets/img/vx.svg'
 import navIcon3 from '../assets/img/dy.svg'
 import announce from '../assets/img/公告.png'
+import music from '../assets/img/音乐.svg'
+import stopMusic from '../assets/img/音乐-禁止.svg'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setUser } from '@/redux/modules/userSlice'
 import Modal from '@/components/Modal'
@@ -23,6 +25,7 @@ const NavBar: React.FC<NavBarProps> = ({
   setIsChangeModalOpen,
 }) => {
   const [activeLink, setActiveLink] = useState<string>('home')
+  const [isPlaying, setIsPlaying] = useState(true)
   const [isAnnounceOpen, setIsAnnounceOpen] = useState<boolean>(false)
   const [scolled, setScolled] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user)
@@ -140,6 +143,11 @@ const NavBar: React.FC<NavBarProps> = ({
               className='announce'
               src={announce}
               onClick={() => setIsAnnounceOpen(true)}
+            />
+            <img
+              className='announce'
+              src={isPlaying ? music : stopMusic}
+              onClick={() => setIsPlaying(!isPlaying)}
             />
             <Modal open={isAnnounceOpen} setIsModalOpen={setIsAnnounceOpen}>
               <Announce setIsModalOpen={setIsAnnounceOpen}></Announce>
